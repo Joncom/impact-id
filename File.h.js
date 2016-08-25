@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 BFG Edition GPL Source Code
-Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").  
+This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").
 
 Doom 3 BFG Edition Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@ If you have questions concerning this license or the applicable additional terms
 ===========================================================================
 */
 
-#ifndef __FILE_H__
-#define __FILE_H__
+// #ifndef __FILE_H__
+// #define __FILE_H__
 
 /*
 ==============================================================
@@ -38,6 +38,7 @@ If you have questions concerning this license or the applicable additional terms
 */
 
 // mode parm for Seek
+/*
 typedef enum {
 	FS_SEEK_CUR,
 	FS_SEEK_END,
@@ -47,7 +48,9 @@ typedef enum {
 class idFileSystemLocal;
 
 
+*/
 class idFile {
+/*
 public:
 	virtual					~idFile() {};
 							// Get the name of the file.
@@ -78,7 +81,7 @@ public:
 	virtual int				VPrintf( const char *fmt, va_list arg );
 							// Write a string with high precision floating point numbers to the file.
 	virtual int				WriteFloatString( VERIFY_FORMAT_STRING const char *fmt, ... );
-	
+
 	// Endian portable alternatives to Read(...)
 	virtual int				ReadInt( int &value );
 	virtual int				ReadUnsignedInt( unsigned int &value );
@@ -94,7 +97,7 @@ public:
 	virtual int				ReadVec4( idVec4 &vec );
 	virtual int				ReadVec6( idVec6 &vec );
 	virtual int				ReadMat3( idMat3 &mat );
-	
+
 	// Endian portable alternatives to Write(...)
 	virtual int				WriteInt( const int value );
 	virtual int				WriteUnsignedInt( const unsigned int value );
@@ -136,13 +139,15 @@ public:
 		}
 		return r;
 	}
-};
+*/
+}
 
 /*
 ================================================
-idFile_Memory 
+idFile_Memory
 ================================================
 */
+/*
 class idFile_Memory : public idFile {
 	friend class			idFileSystemLocal;
 
@@ -205,7 +210,10 @@ private:
 };
 
 
-class idFile_BitMsg : public idFile {
+*/
+// class idFile_BitMsg : public idFile {
+class idFile_BitMsg extends idFile {
+/*
 	friend class			idFileSystemLocal;
 
 public:
@@ -228,9 +236,11 @@ private:
 	idStr					name;			// name of the file
 	int						mode;			// open mode
 	idBitMsg *				msg;
-};
+*/
+}
 
 
+/*
 class idFile_Permanent : public idFile {
 	friend class			idFileSystemLocal;
 
@@ -338,14 +348,16 @@ private:
 	byte *				resourceBuffer;		// if using the temp save memory
 };
 #endif
+*/
 /*
 ================================================
-idFileLocal is a FileStream wrapper that automatically closes a file when the 
-class variable goes out of scope. Note that the pointer passed in to the constructor can be for 
-any type of File Stream that ultimately inherits from idFile, and that this is not actually a 
-SmartPointer, as it does not keep a reference count. 
+idFileLocal is a FileStream wrapper that automatically closes a file when the
+class variable goes out of scope. Note that the pointer passed in to the constructor can be for
+any type of File Stream that ultimately inherits from idFile, and that this is not actually a
+SmartPointer, as it does not keep a reference count.
 ================================================
 */
+/*
 class idFileLocal {
 public:
 	// Constructor that accepts and stores the file pointer.
@@ -368,7 +380,8 @@ public:
 protected:
 	idFile *file;	// The managed file pointer.
 };
+*/
 
 
 
-#endif /* !__FILE_H__ */
+// #endif /* !__FILE_H__ */
