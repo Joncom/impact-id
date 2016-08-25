@@ -2,9 +2,9 @@
 ===========================================================================
 
 Doom 3 BFG Edition GPL Source Code
-Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company. 
+Copyright (C) 1993-2012 id Software LLC, a ZeniMax Media company.
 
-This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").  
+This file is part of the Doom 3 BFG Edition GPL Source Code ("Doom 3 BFG Edition Source Code").
 
 Doom 3 BFG Edition Source Code is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
+/*
 #ifndef __SNAPSHOT_H__
 #define __SNAPSHOT_H__
 
@@ -33,11 +34,14 @@ If you have questions concerning this license or the applicable additional terms
 extern idCVar net_verboseSnapshot;
 #define NET_VERBOSESNAPSHOT_PRINT	if ( net_verboseSnapshot.GetInteger() > 0 ) idLib::Printf
 #define NET_VERBOSESNAPSHOT_PRINT_LEVEL( X, Y )  if ( net_verboseSnapshot.GetInteger() >= ( X ) ) idLib::Printf( Y )
+*/
 
 /*
 A snapshot contains a list of objects and their states
 */
 class idSnapShot {
+}
+/*
 public:
 	idSnapShot();
 	idSnapShot( const idSnapShot & other );
@@ -60,17 +64,45 @@ public:
 	// Reads a new object state packet, which is assumed to be delta compressed against this snapshot
 	bool ReadDeltaForJob( const char * deltaMem, int deltaSize, int visIndex, idSnapShot * templateStates );
 	bool ReadDelta( idFile * file, int visIndex );
+	*/
 
 	// Writes an object state packet which is delta compressed against the old snapshot
-	struct objectBuffer_t {
-		objectBuffer_t() : data( NULL ), size( 0 ) { }
-		objectBuffer_t( int s ) : data( NULL ), size( s ) { Alloc( s ); }
-		objectBuffer_t( const objectBuffer_t & o ) : data( NULL ), size( 0 ) { *this = o; }
+	// struct objectBuffer_t {
+	class objectBuffer_t {
+		constructor( arg ) {
+			// objectBuffer_t() : data( NULL ), size( 0 ) { }
+			if( typeof arg === 'undefined' ) {
+				this.data = null;
+				this.size = 0;
+				return;
+			// objectBuffer_t( int s ) : data( NULL ), size( s ) { Alloc( s ); }
+			} else if( typeof arg === 'number' ) {
+				this.data = null;
+				this.size = arg;
+				this.Alloc( arg );
+				return;
+			// objectBuffer_t( const objectBuffer_t & o ) : data( NULL ), size( 0 ) { *this = o; }
+			} else if( arg instanceof objectBuffer_t ) {
+				throw new Error( "objectBuffer_t:constructor: passing in an objectBuffer_t not yet implemented" );
+			}
+			throw new Error( "objectBuffer_t::constructor: invalid argument" );
+		}
+
+		/*
 		~objectBuffer_t() { _Release(); }
 		void Alloc( int size );
-		int NumRefs() { return data == NULL ? 0 : data[size]; }
-		objectSize_t Size() const { return size; }
-		byte * Ptr() { return data == NULL ? NULL : data ; }
+		*/
+
+		// int NumRefs() { return data == NULL ? 0 : data[size]; }
+		NumRefs() { return this.data === null ? 0 : this.data[this.size]; }
+
+		// objectSize_t Size() const { return size; }
+		Size() { return this.size; }
+
+		// byte * Ptr() { return data == NULL ? NULL : data ; }
+		Ptr() { return this.data === null ? null : this.data ; }
+
+		/*
 		byte & operator[]( int i ) { return data[i]; }
 		void operator=( const objectBuffer_t & other );
 
@@ -79,20 +111,34 @@ public:
 		void _Release();
 	private:
 		byte *			data;
-		objectSize_t	size;		
-	};
+		objectSize_t	size;
+		*/
+	}
 
-	struct objectState_t {
-		objectState_t() : 
-			objectNum( 0 ),
-			visMask( MAX_UNSIGNED_TYPE( uint32 ) ),
-			stale( false ),
-			deleted( false ),
-			changedCount( 0 ),
-			createdFromTemplate( false ),
-			
-			expectedSequence( 0 )
-			{ }
+	// struct objectState_t {
+	class objectState_t {
+		// objectState_t() :
+		constructor() {
+			// objectNum( 0 ),
+			this.objectNum = 0;
+            // visMask( MAX_UNSIGNED_TYPE( uint32 ) ),
+            this.visMask = 0;
+            // stale( false ),
+            this.stale = false;
+            // deleted( false ),
+            this.deleted = false;
+            // changedCount( 0 ),
+            this.changedCount = 0;
+            // createdFromTemplate( false ),
+            this.createdFromTemplate = false;
+
+            // expectedSequence( 0 )
+            this.expectedSequence = 0;
+            // { }
+
+            this.buffer = new objectBuffer_t();
+		}
+		/*
 		void Print( const char * name );
 
 		uint16			objectNum;
@@ -103,8 +149,10 @@ public:
 		int				changedCount;	// Incremented each time the state changed
 		int				expectedSequence;
 		bool			createdFromTemplate;
-	};
+		*/
+	}
 
+    /*
 	struct submitDeltaJobsInfo_t {
 		objParms_t *		objParms;				// Start of object parms
 		int					maxObjParms;			// Max parms (which will dictate how many objects can be processed)
@@ -114,13 +162,13 @@ public:
 		int					maxObjMemory;			// Max memory (which will dictate when syncs need to occur)
 		lzwParm_t *			lzwParms;				// Start of lzw parms
 		int					maxDeltaParms;			// Max lzw parms (which will dictate how many syncs we can have)
-		
+
 		idSnapShot *		oldSnap;				// snap we are comparing this snap to (to produce a delta)
-		int					visIndex; 
+		int					visIndex;
 		int					baseSequence;
 
 		idSnapShot *		templateStates;			// states for new snapObj that arent in old states
-		
+
 		lzwInOutData_t *	lzwInOutData;
 	};
 
@@ -146,7 +194,7 @@ public:
 
 	// returns the object index or -1 if it's not found
 	int FindObjectIndexByID( int objectNum ) const;
-	
+
 	// returns the object by id, or NULL if not found
 	objectState_t *	FindObjectByID( int objectNum ) const;
 
@@ -186,16 +234,17 @@ private:
 										objHeader_t *&					curHeader,					// Current header dest
 										uint8 *&						curObjDest,					// Current write pos of current obj
 										lzwParm_t *&					curlzwParm  );				// Current delta parm for next lzw job
-	void SubmitLZWJob( 
+	void SubmitLZWJob(
 		const submitDeltaJobsInfo_t &	writeDeltaInfo,		// Struct containing parameters originally passed in to SubmitWriteDeltaToJobs
 		objParms_t *&					baseObjParm,		// Pointer to the first obj parm for the current stream
 		objParms_t *&					curObjParm,			// Current obj parm
 		lzwParm_t *&					curlzwParm,			// Current delta parm
 		bool							saveDictionary		// If true, this is the first of several calls which will be appended
-	);		
-	
+	);
+
 	void WriteObject( idFile * file, int visIndex, objectState_t * newState, objectState_t * oldState, int & lastobjectNum );
 	void FreeObjectState( int index );
 };
 
 #endif // __SNAPSHOT_H__
+*/
