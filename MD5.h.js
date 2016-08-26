@@ -17,6 +17,7 @@ struct MD5_CTX {
 	unsigned int	bits[2];
 	unsigned char	in[64];
 };
+*/
 
 void MD5_Init( MD5_CTX *ctx );
 void MD5_Update( MD5_CTX *context, unsigned char const *input, size_t inputLen );
