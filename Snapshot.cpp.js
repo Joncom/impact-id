@@ -771,6 +771,9 @@ ReadDelta: function( file, visIndex ) {
 
         // #ifdef SNAPSHOT_CHECKSUMS
         if( typeof SNAPSHOT_CHECKSUMS !== 'undefined' && SNAPSHOT_CHECKSUMS ) {
+            if( typeof SparkMD5 === 'undefined' ) {
+                throw new Error( 'SparkMD5 is not defined');
+            }
             if ( state.buffer.Size() > 0 ) {
                 // unsigned int checksum = 0;
                 // file->ReadBig( checksum );
@@ -924,6 +927,9 @@ WriteObject: function( file, visIndex, newState, oldState ) {
 
     // #ifdef SNAPSHOT_CHECKSUMS
     if( typeof SNAPSHOT_CHECKSUMS !== 'undefined' && SNAPSHOT_CHECKSUMS ) {
+        if( typeof SparkMD5 === 'undefined' ) {
+            throw new Error( 'SparkMD5 is not defined');
+        }
         // if ( ( !visChange || visSendState ) && newState != NULL ) {
         if ( ( !visChange || visSendState ) && newState !== null ) {
             // assert( newState->buffer.Size() > 0 );
