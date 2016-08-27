@@ -39,10 +39,10 @@ is never free-d.
 idBitMsg = function( data, length ) {
 // public:
     // idBitMsg() { InitWrite( NULL, 0 ); }
-    if(typeof data === 'undefined') { this.InitWrite( null ); return; }
+    if( typeof data === 'undefined' ) { this.InitWrite( null, 0 ); return; }
     // idBitMsg( byte * data, int length ) { InitWrite( data, length ); }
     // idBitMsg( const byte * data, int length ) { InitRead( data, length ); }
-    this.InitWrite( data );
+    this.InitWrite( data, length );
 
     /*
     // both read & write
@@ -268,7 +268,7 @@ private:
     bool            CheckOverflow( int numBits );
     byte *          GetByteSpace( int length );
 */
-}
+};
 
 /*
 ========================
@@ -277,12 +277,17 @@ idBitMsg::InitWrite
 */
 // ID_INLINE void idBitMsg::InitWrite( byte *data, int length ) {
 idBitMsg.prototype.InitWrite = function( data, length ) {
+
+    if( !Number.isInteger( length ) ) {
+        throw new Error( 'idBitMsg: length argument must be an integer' );
+    }
+
     // writeData = data;
     this.writeData = data;
     // readData = data;
     this.readData = data;
     // maxSize = length;
-    this.maxSize = ( data ? data.length : 0 );
+    this.maxSize = length;
     // curSize = 0;
     this.curSize = 0;
 
@@ -307,15 +312,20 @@ idBitMsg::InitRead
 ========================
 */
 // ID_INLINE void idBitMsg::InitRead( const byte *data, int length ) {
-idBitMsg.prototype.InitRead = function( data ) {
+idBitMsg.prototype.InitRead = function( data, length ) {
+
+    if( !Number.isInteger( length ) ) {
+        throw new Error( 'idBitMsg: length argument must be an integer' );
+    }
+
     // writeData = NULL;
     this.writeData = null;
     // readData = data;
     this.readData = data;
     // maxSize = length;
-    this.maxSize = data.length;
+    this.maxSize = length;
     // curSize = length;
-    this.curSize = data.length;
+    this.curSize = length;
 
     // writeBit = 0;
     this.writeBit = 0;
