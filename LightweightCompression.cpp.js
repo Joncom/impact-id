@@ -25,25 +25,25 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#pragma hdrstop
-#include "../idLib/precompiled.h"
-#include "LightweightCompression.h"
+// #pragma hdrstop
+// #include "../idLib/precompiled.h"
+// #include "LightweightCompression.h"
 
 /*
 ========================
 HashIndex
 ========================
 */
-static int HashIndex( int w, int k ) {
+/* static int HashIndex( int w, int k ) {
 	return ( w ^ k ) & idLZWCompressor::HASH_MASK;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::Start
 ========================
 */
-void idLZWCompressor::Start( uint8 * data_, int maxSize_, bool append ) {
+/* void idLZWCompressor::Start( uint8 * data_, int maxSize_, bool append ) {
 	// Clear hash
 	ClearHash();
 
@@ -90,14 +90,14 @@ void idLZWCompressor::Start( uint8 * data_, int maxSize_, bool append ) {
 	saveCodeBits		= 0;
 	savedTempValue		= 0;
 	savedTempBits		= 0;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::ReadBits
 ========================
 */
-int idLZWCompressor::ReadBits( int bits ) {
+/* int idLZWCompressor::ReadBits( int bits ) {
 	int bitsToRead = bits - lzwData->tempBits;
 
 	while ( bitsToRead > 0 ) {
@@ -114,14 +114,14 @@ int idLZWCompressor::ReadBits( int bits ) {
 	lzwData->tempBits -= bits;
 
 	return value;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::WriteBits
 ========================
 */
-void idLZWCompressor::WriteBits( uint32 value, int bits ) {
+/* void idLZWCompressor::WriteBits( uint32 value, int bits ) {
 
 	// Queue up bits into temp value
 	lzwData->tempValue |= (uint64)value << lzwData->tempBits;
@@ -138,7 +138,7 @@ void idLZWCompressor::WriteBits( uint32 value, int bits ) {
 		lzwData->tempValue >>= 8;
 		lzwData->tempBits -= 8;
 	}
-}
+} */
 
 /*
 ========================
@@ -148,7 +148,7 @@ The chain is stored backwards, so we have to write it to a buffer then output th
 reverse.
 ========================
 */
-int idLZWCompressor::WriteChain( int code ) {
+/* int idLZWCompressor::WriteChain( int code ) {
 	byte chain[lzwCompressionData_t::LZW_DICT_SIZE];
 	int firstChar = 0;
 	int i = 0;
@@ -162,14 +162,14 @@ int idLZWCompressor::WriteChain( int code ) {
 		block[blockSize++] = chain[i];
 	}
 	return firstChar;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::DecompressBlock
 ========================
 */
-void idLZWCompressor::DecompressBlock() {
+/* void idLZWCompressor::DecompressBlock() {
 	assert( blockIndex == blockSize );		// Make sure we've read all we can
 
 	blockIndex = 0;
@@ -206,14 +206,14 @@ void idLZWCompressor::DecompressBlock() {
 			oldCode = code;
 		}
 	}
-}
+} */
 
 /*
 ========================
 idLZWCompressor::ReadByte
 ========================
 */
-int idLZWCompressor::ReadByte( bool ignoreOverflow ) {
+/* int idLZWCompressor::ReadByte( bool ignoreOverflow ) {
 	if ( blockIndex == blockSize ) {
 		DecompressBlock();
 	}
@@ -227,7 +227,7 @@ int idLZWCompressor::ReadByte( bool ignoreOverflow ) {
 	}
 
 	return block[blockIndex++];
-}
+} */
 
 
 /*
@@ -235,7 +235,7 @@ int idLZWCompressor::ReadByte( bool ignoreOverflow ) {
 idLZWCompressor::WriteByte
 ========================
 */
-void idLZWCompressor::WriteByte( uint8 value ) {
+/* void idLZWCompressor::WriteByte( uint8 value ) {
 	int code = Lookup( lzwData->codeWord, value );
 	if ( code >= 0 ) {
 		lzwData->codeWord = code;
@@ -251,14 +251,14 @@ void idLZWCompressor::WriteByte( uint8 value ) {
 		overflowed = true;	// At any point, if we can't perform an End call, then trigger an overflow
 		return;
 	}
-}
+} */
 
 /*
 ========================
 idLZWCompressor::Lookup
 ========================
 */
-int idLZWCompressor::Lookup( int w, int k ) {
+/* int idLZWCompressor::Lookup( int w, int k ) {
 	if ( w == -1 ) {
 		return k;
 	} else {
@@ -272,14 +272,14 @@ int idLZWCompressor::Lookup( int w, int k ) {
 		}
 	}
 	return -1;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::AddToDict
 ========================
 */
-int idLZWCompressor::AddToDict( int w, int k ) {
+/* int idLZWCompressor::AddToDict( int w, int k ) {
 	assert( w < 0xFFFF - 1 );
 	assert( k < 256 );
 	assert( lzwData->nextCode < lzwCompressionData_t::LZW_DICT_SIZE );
@@ -290,7 +290,7 @@ int idLZWCompressor::AddToDict( int w, int k ) {
 	nextHash[lzwData->nextCode] = hash[i];
 	hash[i] = (uint16)lzwData->nextCode;
 	return lzwData->nextCode++;
-}
+} */
 
 /*
 ========================
@@ -300,7 +300,7 @@ Possibly increments codeBits.
 	return: bool	- true, if the dictionary was cleared.
 ========================
 */
-bool idLZWCompressor::BumpBits() {
+/* bool idLZWCompressor::BumpBits() {
 	if ( lzwData->nextCode == ( 1 << lzwData->codeBits ) ) {
 		lzwData->codeBits ++;
 		if ( lzwData->codeBits > lzwCompressionData_t::LZW_DICT_BITS ) {
@@ -311,14 +311,14 @@ bool idLZWCompressor::BumpBits() {
 		}
 	}
 	return false;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::End
 ========================
 */
-int idLZWCompressor::End() {
+/* int idLZWCompressor::End() {
 	assert( lzwData->tempBits < 8 );
 	assert( lzwData->bytesWritten < maxSize - ( lzwData->codeBits + lzwData->tempBits + 7 ) / 8 );
 
@@ -337,14 +337,14 @@ int idLZWCompressor::End() {
 	}
 
 	return Length() > 0 ? Length() : -1;		// Total bytes written (or failure)
-}
+} */
 
 /*
 ========================
 idLZWCompressor::Save
 ========================
 */
-void idLZWCompressor::Save() {
+/* void idLZWCompressor::Save() {
 	assert( !overflowed );
 	// Check and make sure we are at a good spot (can call End)
 	assert( lzwData->bytesWritten < maxSize - ( lzwData->codeBits + lzwData->tempBits + 7 ) / 8 );
@@ -354,29 +354,29 @@ void idLZWCompressor::Save() {
 	saveCodeBits		= lzwData->codeBits;
 	savedTempValue		= lzwData->tempValue;
 	savedTempBits		= lzwData->tempBits;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::Restore
 ========================
 */
-void idLZWCompressor::Restore() {
+/* void idLZWCompressor::Restore() {
 	lzwData->bytesWritten	= savedBytesWritten;
 	lzwData->codeWord		= savedCodeWord;
 	lzwData->codeBits		= saveCodeBits;
 	lzwData->tempValue		= savedTempValue;
 	lzwData->tempBits		= savedTempBits;
-}
+} */
 
 /*
 ========================
 idLZWCompressor::ClearHash
 ========================
 */
-void idLZWCompressor::ClearHash() {
+/* void idLZWCompressor::ClearHash() {
 	memset( hash, 0xFF, sizeof( hash ) );
-}
+} */
 
 /*
 ========================
@@ -385,15 +385,15 @@ Simple zero based run length encoder/decoder
 ========================
 */
 
-void idZeroRunLengthCompressor::Start( uint8 * dest_, idLZWCompressor * comp_, int maxSize_ ) {
+/* void idZeroRunLengthCompressor::Start( uint8 * dest_, idLZWCompressor * comp_, int maxSize_ ) {
 	zeroCount	= 0;
 	dest		= dest_;
 	comp		= comp_;
 	compressed	= 0;
 	maxSize		= maxSize_;
-}
+} */
 
-bool idZeroRunLengthCompressor::WriteRun() {
+/* bool idZeroRunLengthCompressor::WriteRun() {
 	if ( zeroCount > 0 ) {
 		assert( zeroCount <= 255 );
 		if ( compressed + 2 > maxSize ) {
@@ -411,9 +411,9 @@ bool idZeroRunLengthCompressor::WriteRun() {
 		zeroCount = 0;
 	}
 	return true;
-}
+} */
 
-bool idZeroRunLengthCompressor::WriteByte( uint8 value ) {
+/* bool idZeroRunLengthCompressor::WriteByte( uint8 value ) {
 	if ( value != 0 || zeroCount >= 255 ) {
 		if ( !WriteRun() ) {
 			maxSize = -1;
@@ -437,9 +437,9 @@ bool idZeroRunLengthCompressor::WriteByte( uint8 value ) {
 	}
 
 	return true;
-}
+} */
 
-byte idZeroRunLengthCompressor::ReadByte() {
+/* byte idZeroRunLengthCompressor::ReadByte() {
 	// See if we need to possibly read more data
 	if ( zeroCount == 0 ) {
 		int value = ReadInternal();
@@ -457,32 +457,32 @@ byte idZeroRunLengthCompressor::ReadByte() {
 
 	zeroCount--;
 	return 0;
-}
+} */
 
-void idZeroRunLengthCompressor::ReadBytes( byte * dest, int count ) {
+/* void idZeroRunLengthCompressor::ReadBytes( byte * dest, int count ) {
 	for ( int i = 0; i < count; i++ ) {
 		*dest++ = ReadByte();
 	}
-}
+} */
 
-void idZeroRunLengthCompressor::WriteBytes( uint8 * src, int count ) {
+/* void idZeroRunLengthCompressor::WriteBytes( uint8 * src, int count ) {
 	for ( int i = 0; i < count; i++ ) {
 		WriteByte( *src++ );
 	}
-}
+} */
 
-int idZeroRunLengthCompressor::End() {
+/* int idZeroRunLengthCompressor::End() {
 	WriteRun();
 	if ( maxSize == -1 ) {
 		return -1;
 	}
 	return compressed;
-}
+} */
 
-int idZeroRunLengthCompressor::ReadInternal() {
+/* int idZeroRunLengthCompressor::ReadInternal() {
 	compressed++;
 	if ( comp != NULL ) {
 		return comp->ReadByte();
 	}
 	return *dest++;
-}
+} */

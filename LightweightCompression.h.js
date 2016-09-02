@@ -25,11 +25,11 @@ If you have questions concerning this license or the applicable additional terms
 
 ===========================================================================
 */
-#ifndef __LIGHTWEIGHT_COMPRESSION_H__
-#define __LIGHTWEIGHT_COMPRESSION_H__
+// #ifndef __LIGHTWEIGHT_COMPRESSION_H__
+// #define __LIGHTWEIGHT_COMPRESSION_H__
 
 
-struct lzwCompressionData_t {
+/* struct lzwCompressionData_t {
 	static const int	LZW_DICT_BITS	= 12;
 	static const int	LZW_DICT_SIZE	= 1 << LZW_DICT_BITS;
 
@@ -44,7 +44,7 @@ struct lzwCompressionData_t {
 	uint64					tempValue;
 	int						tempBits;
 	int						bytesWritten;
-};
+}; */
 
 /*
 ========================
@@ -52,7 +52,7 @@ idLZWCompressor
 Simple lzw based encoder/decoder
 ========================
 */
-class idLZWCompressor {
+/* class idLZWCompressor {
 public:
 	idLZWCompressor( lzwCompressionData_t * lzwData_ ) : lzwData( lzwData_ ) {}
 
@@ -172,7 +172,7 @@ private:
 	int					saveCodeBits;
 	uint64				savedTempValue;
 	int					savedTempBits;
-};
+}; */
 
 /*
 ========================
@@ -180,7 +180,7 @@ idZeroRunLengthCompressor
 Simple zero based run length encoder/decoder
 ========================
 */
-class idZeroRunLengthCompressor {
+/* class idZeroRunLengthCompressor {
 public:
 	idZeroRunLengthCompressor() : zeroCount( 0 ), destStart( NULL ) {
 	}
@@ -204,6 +204,6 @@ private:
 	uint8 *				dest;
 	int					compressed;		// Compressed size
 	int					maxSize;
-};
+}; */
 
-#endif // __LIGHTWEIGHT_COMPRESSION_H__
+// #endif // __LIGHTWEIGHT_COMPRESSION_H__
