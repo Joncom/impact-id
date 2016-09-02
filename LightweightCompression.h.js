@@ -85,17 +85,20 @@ Simple lzw based encoder/decoder
     int     Lookup( int w, int k );
     int     AddToDict( int w, int k );
     bool    BumpBits();
-    int     End();
+    int     End(); */
 
-    int     Length() const { return lzwData->bytesWritten; }
-    int     GetReadCount() const { return bytesRead; }
+    // int     Length() const { return lzwData->bytesWritten; }
+    idLZWCompressor.prototype.Length = function() { return this.lzwData.bytesWritten; };
+    // int     GetReadCount() const { return bytesRead; }
+    idLZWCompressor.protype.GetReadCount = function() { return this.bytesRead; };
 
-    void    Save();
-    void    Restore();
+    // void    Save();
+    // void    Restore();
 
-    bool    IsOverflowed() { return overflowed; }
+    // bool    IsOverflowed() { return overflowed; }
+    idLZWCompressor.prototype.IsOverflowed = function() { return this.overflowed; };
 
-    int     Write( const void * data, int length ) {
+    /* int     Write( const void * data, int length ) {
         uint8 * src = (uint8*)data;
 
         for ( int i = 0; i < length && !IsOverflowed(); i++ ) {
