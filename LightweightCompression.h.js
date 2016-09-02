@@ -52,11 +52,12 @@ idLZWCompressor
 Simple lzw based encoder/decoder
 ========================
 */
-/* class idLZWCompressor {
-public:
-	idLZWCompressor( lzwCompressionData_t * lzwData_ ) : lzwData( lzwData_ ) {}
+// class idLZWCompressor {
+// public:
+	// idLZWCompressor( lzwCompressionData_t * lzwData_ ) : lzwData( lzwData_ ) {}
+	idLZWCompressor = function( lzwData_ ) { this.lzwData = lzwData_; }
 
-	static const int	LZW_BLOCK_SIZE	= ( 1 << 15 );
+	/* static const int	LZW_BLOCK_SIZE	= ( 1 << 15 );
 	static const int	LZW_START_BITS	= 9;
 	static const int	LZW_FIRST_CODE	= ( 1 << ( LZW_START_BITS - 1 ) );
 
