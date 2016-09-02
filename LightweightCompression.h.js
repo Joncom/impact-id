@@ -29,22 +29,33 @@ If you have questions concerning this license or the applicable additional terms
 // #define __LIGHTWEIGHT_COMPRESSION_H__
 
 
-/* struct lzwCompressionData_t {
-    static const int    LZW_DICT_BITS   = 12;
-    static const int    LZW_DICT_SIZE   = 1 << LZW_DICT_BITS;
+// struct lzwCompressionData_t {
+lzwCompressionData_t = function() {
+    // static const int    LZW_DICT_BITS   = 12;
+    this.LZW_DICT_BITS = 12;
+    // static const int    LZW_DICT_SIZE   = 1 << LZW_DICT_BITS;
+    this.LZW_DICT_SIZE = 1 << this.LZW_DICT_BITS;
 
-    uint8                   dictionaryK[LZW_DICT_SIZE];
-    uint16                  dictionaryW[LZW_DICT_SIZE];
+    // uint8                   dictionaryK[LZW_DICT_SIZE];
+    this.dictionaryK = new Uint8Array( this.LZW_DICT_SIZE );
+    // uint16                  dictionaryW[LZW_DICT_SIZE];
+    this.dictionaryW = new Uint16Array( this.LZW_DICT_SIZE );
 
-    int                     nextCode;
-    int                     codeBits;
+    // int                     nextCode;
+    this.nextCode = null;
+    // int                     codeBits;
+    this.codeBits = null;
 
-    int                     codeWord;
+    // int                     codeWord;
+    this.codeWord = null;
 
-    uint64                  tempValue;
-    int                     tempBits;
-    int                     bytesWritten;
-}; */
+    // uint64                  tempValue;
+    this.tempValue = null;
+    // int                     tempBits;
+    this.tempBits = null;
+    // int                     bytesWritten;
+    this.bytesWritten = null;
+};
 
 /*
 ========================
