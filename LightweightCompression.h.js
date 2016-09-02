@@ -90,7 +90,7 @@ Simple lzw based encoder/decoder
     // int     Length() const { return lzwData->bytesWritten; }
     idLZWCompressor.prototype.Length = function() { return this.lzwData.bytesWritten; };
     // int     GetReadCount() const { return bytesRead; }
-    idLZWCompressor.protype.GetReadCount = function() { return this.bytesRead; };
+    idLZWCompressor.prototype.GetReadCount = function() { return this.bytesRead; };
 
     // void    Save();
     // void    Restore();
