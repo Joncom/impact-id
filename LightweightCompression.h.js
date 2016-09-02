@@ -68,11 +68,14 @@ Simple lzw based encoder/decoder
     // idLZWCompressor( lzwCompressionData_t * lzwData_ ) : lzwData( lzwData_ ) {}
     idLZWCompressor = function( lzwData_ ) { this.lzwData = lzwData_; };
 
-    /* static const int LZW_BLOCK_SIZE  = ( 1 << 15 );
-    static const int    LZW_START_BITS  = 9;
-    static const int    LZW_FIRST_CODE  = ( 1 << ( LZW_START_BITS - 1 ) );
+    // static const int LZW_BLOCK_SIZE  = ( 1 << 15 );
+    idLZWCompressor.prototype.LZW_BLOCK_SIZE = ( 1 << 15 );
+    // static const int    LZW_START_BITS  = 9;
+    idLZWCompressor.prototype.LZW_START_BITS = 9;
+    // static const int    LZW_FIRST_CODE  = ( 1 << ( LZW_START_BITS - 1 ) );
+    idLZWCompressor.prototype.LZW_FIRST_CODE = ( 1 << ( idLZWCompressor.prototype.LZW_START_BITS - 1 ) );
 
-    void    Start( uint8 * data_, int maxSize, bool append = false );
+    /* void    Start( uint8 * data_, int maxSize, bool append = false );
     int     ReadBits( int bits );
     int     WriteChain( int code );
     void    DecompressBlock();
